@@ -11,6 +11,6 @@ def get_description(title):
         pageid = list(DATA['query']['pages'].keys())[0]
         return DATA['query']['pages'][str(pageid)]['extract']
     except:
-        return None
+        return "no wiki"
 if __name__ == "__main__":
    print(get_description("サグラダファミリア"))

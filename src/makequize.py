@@ -16,6 +16,7 @@ class Quiz:
             lambda: {"answer": "", "correct": "", "miss": ""})
         self.title_limit = title_limit
         self.finish = None
+        self.heritage = None
 
     def dictio(self, user_id):
         return self.user2answer[user_id]["answer"]
@@ -52,7 +53,7 @@ class Quiz:
         # if select:
         actions = [PostbackAction(
             label=f"{keyanswer}", data=reply_correct_sentence)]
-        while len(actions) <= select_option_num:
+        while len(actions) < select_option_num:
             conterfactual_titile = randomchoice()
             actions.append(PostbackAction(label=f"{conterfactual_titile}",
                                                 data=reply_miss_sentence))
@@ -70,11 +71,14 @@ class Quiz:
                 )
             )
         self.finish = buttons_template_message
+        self.heritage = heritage
         # else:
         #     assert user_id is not None
         #     return [TextSendMessage(text=description), TextSendMessage(text="Wikipedia 記述クイズ\nさて，上は何の説明でしょう？")]
     def sendfinish(self):
         return self.finish
+    def getview(self):
+        return self.heritage
 
 # def make_quiz_button_template(heritage):
 #     select_option_num = 4

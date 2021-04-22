@@ -1,15 +1,31 @@
 import random
 import pandas as pd
+df = pd.read_csv(filepath_or_buffer="heritage_list.csv")
 
 def select(quary):
-    df = pd.read_csv(filepath_or_buffer="heritage_list.csv")
-    if quary =="自然遺産" or "文化遺産" or "複合遺産" or "危機遺産":
+    if quary.isnumeric():
+        cand = df[df["chaputar"] == int(quary)]
+    elif quary.endswith("遺産"):
         cand = df[df["class"] == quary]
     else:
         cand = df[df["country"] == quary]
-         
-    # heritage = random.choice(cand.values)[0]
-    # # return csv_input
-    return cand
+    
+    if len(cand) != 0:    
+        heritage = random.choice(cand.values)[0]
+    
+    else:
+        heritage = "no heritage"
+    return heritage
 
-print(select("自然遺産"))
+def randomchoice():
+    # df = pd.read_csv(filepath_or_buffer="heritage_list.csv")
+    chosen = random.choice(df.values)[3]
+    return chosen
+
+def right(heritage):
+    answer = random.choice(df[df["name"] == heritage].values)[3]
+    return answer
+
+print(select("ドイツ"))
+print(randomchoice())
+print(right("アーヘンの大聖堂"))

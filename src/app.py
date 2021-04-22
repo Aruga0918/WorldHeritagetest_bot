@@ -10,6 +10,7 @@ from linebot.exceptions import (
 from linebot.models import (
     MessageEvent, PostbackEvent, TextMessage, TextSendMessage, TemplateSendMessage, TemplateSendMessage, ButtonsTemplate, URIAction
 )
+from travel import view
 from youtube import youtubesearch
 from wiki import get_description
 from randomselect import select
@@ -54,6 +55,22 @@ def handle_message(event):
                 event.reply_token,
                 button_messages
                 )
+            quiz.reset(user_id)
+        elif event.message.text == "行く":
+            heritage = quiz.getview()
+            street_url = view(heritage)
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text =street_url)
+                )
+            quiz.reset(user_id)
+        else:
+            coment = "「クイズ」と送信すると問題をだすよ！\n「行く」と送信するとStreet viewにつなぐよ！"
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(text=coment)
+                )
+
     else:
         query = select(event.message.text)
         if query != "no heritage":

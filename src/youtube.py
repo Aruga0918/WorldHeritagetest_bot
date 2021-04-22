@@ -12,7 +12,23 @@ def youtubesearch(title):
     order='viewCount',
     type='video',
     ).execute()
+    search_response2 = youtube.search().list(
+        part='id',
+#検索したい文字列を指定
+        q=title ,
+#視聴回数が多い順に取得
+        order='viewCount',
+        type='video',
+        ).execute()
     # print(search_response)
-    return f"https://www.youtube.com/watch?v={search_response['items'][0]['id']['videoId']}"
+    if search_response['items'] != []:
+        return f"https://www.youtube.com/watch?v={search_response['items'][0]['id']['videoId']}"
+    # else:
+    #     # return"動画が見つかりませんでした…"
+        
+    elif search_response2['items'] != []:
+        return f"https://www.youtube.com/watch?v={search_response2['items'][0]['id']['videoId']}"
+    else:
+        return"動画が見つかりませんでした…"
 if __name__ == "__main__":
-   print(youtubesearch("sagrada familia"))
+   print(youtubesearch("アーヘンの大聖堂"))
